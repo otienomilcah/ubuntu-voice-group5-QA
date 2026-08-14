@@ -17,28 +17,50 @@ HEALTH_ENDPOINT = f"{API_BASE_URL}/health"
 PUBLIC_AGENTS_ENDPOINT = f"{API_BASE_URL}/api/v1/companies/public"
 
 # Real approved agent IDs fetched from /api/v1/companies/public
+# Last refreshed: 2026-08-13 — IDs change when agents are recreated on the platform
 KNOWN_AGENTS = {
-    "Sudan Peace Agent": "7f06af39-2c2a-4051-99da-bd5adb0d4074",
-    "Somalia Agent":     "e7a09fc9-2f01-4ba8-be54-e863e62f63a8",
-    "Meridia Peace Agent": "f6486f7b-4fe5-451d-9fce-c4b13b9d2475",
+    "Sudan Peace Agent":  "665e4f44-238a-4c5c-b5b7-37f7da77752f",  # TEST - Sudan Peace Agent
+    "Somalia Agent":      "ca1988a1-bc92-48ea-9b37-cb478fa2bd49",  # TEST - G10 Somalia (Kirwa/Onchari)
+    "Meridia Peace Agent": "f6486f7b-4fe5-451d-9fce-c4b13b9d2475", # Meridia Peace Agent (unchanged)
+    "Sudan Response Agent": "906e1f9c-a815-43d2-9a1d-54db08196406", # Sudan Response Agent
 }
 
 
 def get_agent_id(agent_name: str) -> str:
-    """Return the known company_id for a named agent, or raise a clear error."""
-    if agent_name not in KNOWN_AGENTS:
-        raise ValueError(
-            f"Unknown agent '{agent_name}'. "
-            f"Available: {list(KNOWN_AGENTS.keys())}"
-        )
-    return KNOWN_AGENTS[agent_name]
+    """
+    Return the company_id for a named agent.
+    Priority:
+      1. context.agent_map built dynamically by before_all (environment.py)
+      2. KNOWN_AGENTS hardcoded fallback
+    Raises a clear ValueError if neither source has the agent.
+    """
+    # Access context via behave's module-level context when called from steps
+    # The context object is passed per-step; use _dynamic_map as a module cache
+    if agent_name in _dynamic_map:
+        return _dynamic_map[agent_name]
+    if agent_name in KNOWN_AGENTS:
+        return KNOWN_AGENTS[agent_name]
+    raise ValueError(
+        f"Unknown agent '{agent_name}'. "
+        f"Available in KNOWN_AGENTS: {list(KNOWN_AGENTS.keys())}. "
+        f"Available in dynamic map: {list(_dynamic_map.keys())}"
+    )
+
+
+# Module-level cache updated by before_all via the step hook below
+_dynamic_map: dict = {}
 
 
 # ─── Given Steps ──────────────────────────────────────────────────────────────
 
 @given("the cloud API is reachable and healthy")
 def step_check_reachable(context):
-    """Verify the backend is up before running scenarios."""
+    """Verify the backend is up and sync the dynamic agent map from before_all."""
+    # Sync the dynamic map populated by environment.py before_all
+    global _dynamic_map
+    if hasattr(context, "agent_map") and context.agent_map:
+        _dynamic_map = context.agent_map
+
     try:
         r = requests.get(HEALTH_ENDPOINT, timeout=10)
         assert r.status_code == 200, (
