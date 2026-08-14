@@ -217,7 +217,7 @@ Testing covers the following areas:
 
 Group 5 uses **Behavior-Driven Development (BDD)** for API/service automation via **Python**, **Behave**, and **Requests**.
 
-The automation suite executes **14 automated end-to-end scenarios** targeting the live cloud API.
+The automation suite executes **17 automated end-to-end scenarios** across 4 feature files targeting the live cloud API.
 
 ### 5.1 How to Install and Run Automated Tests
 
@@ -248,14 +248,17 @@ Feature: Test Live Cloud AI Agent # features/agent_chat.feature:1
   Scenario: Send a general greeting to an approved agent                       # PASSED
   Scenario: Agent answers an in-scope question about Sudan                     # PASSED
   Scenario: Agent politely refuses an out-of-scope question                   # PASSED
-  Scenario: Unapproved or nonexistent agent returns 404                     # PASSED
+  Scenario: Unapproved or nonexistent agent returns 404                       # PASSED
   Scenario: Empty message is rejected with 422 Unprocessable Entity            # PASSED
-  Scenario: Oversized message is rejected with 422 Unprocessable Entity       # PASSED
-  Scenario: Chat with history context works correctly                         # PASSED
-  Scenario: Somalia agent responds to queries                                 # PASSED
+  Scenario: Oversized message is rejected with 422 Unprocessable Entity        # PASSED
+  Scenario: Chat with history context works correctly                          # PASSED
+  Scenario: Somalia agent responds to queries                                  # PASSED
 
 Feature: Authentication and Security # features/auth_security.feature:1
-  Scenario: Unauthenticated user cannot create an agent                       # PASSED (Returns 401)
+  Scenario: Unauthenticated user cannot create an agent                        # PASSED (Returns 401)
+  Scenario: Unauthenticated user cannot access guardrail audit events          # PASSED (Returns 401)
+  Scenario: Unauthenticated user cannot access known places endpoint           # PASSED (Returns 401)
+  Scenario: Incident statistics rejects unauthenticated access (invalid params)# PASSED (Returns 401)
 
 Feature: Emergency reporting # features/emergency_reports.feature:1
   Scenario: Submit a valid emergency report (Severe Hunger)                    # PASSED
@@ -267,9 +270,9 @@ Feature: WhatsApp webhook flow # features/whatsapp.feature:1
 
 --------------------------------------------------------------------------------
 4 features passed, 0 failed, 0 skipped
-14 scenarios passed, 0 failed, 0 skipped
-53 steps passed, 0 failed, 0 skipped
-Took 1min 11.133s
+17 scenarios passed, 0 failed, 0 skipped
+62 steps passed, 0 failed, 0 skipped
+Took 1min 33.075s
 ```
 
 ---

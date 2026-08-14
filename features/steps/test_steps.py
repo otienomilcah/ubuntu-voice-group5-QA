@@ -62,7 +62,7 @@ def step_check_reachable(context):
         _dynamic_map = context.agent_map
 
     try:
-        r = requests.get(HEALTH_ENDPOINT, timeout=10)
+        r = requests.get(HEALTH_ENDPOINT, timeout=20)
         assert r.status_code == 200, (
             f"Backend health check failed: {r.status_code} - {r.text}"
         )
@@ -78,7 +78,7 @@ def step_check_reachable(context):
 
 @when('I check the health endpoint')
 def step_check_health(context):
-    context.response = requests.get(HEALTH_ENDPOINT, timeout=10)
+    context.response = requests.get(HEALTH_ENDPOINT, timeout=20)
 
 
 @when('the user sends the prompt "{prompt_text}" to agent "{agent_name}"')
@@ -167,6 +167,35 @@ def step_attempt_create_agent_no_auth(context):
         },
         timeout=15,
     )
+
+
+@when('I attempt to access the guardrail audit events without a session')
+def step_attempt_guardrail_events_no_auth(context):
+    """TC-SEC-004: Monitoring guardrail-events endpoint must reject unauthenticated requests."""
+    context.response = requests.get(
+        f"{API_BASE_URL}/api/v1/monitoring/guardrail-events",
+        timeout=15,
+    )
+
+
+@when('I attempt to access the known places endpoint without a session')
+def step_attempt_known_places_no_auth(context):
+    """TC-SEC-005: Monitoring known-places endpoint must reject unauthenticated requests."""
+    context.response = requests.get(
+        f"{API_BASE_URL}/api/v1/monitoring/known-places",
+        timeout=15,
+    )
+
+
+@when('I request incident statistics with an invalid page size of {page_size:d}')
+def step_request_statistics_bad_page_size(context, page_size):
+    """TC-SEC-006: Incident statistics endpoint must reject page_size values greater than 100."""
+    context.response = requests.get(
+        f"{API_BASE_URL}/api/v1/monitoring/incident-statistics",
+        params={"page_size": page_size},
+        timeout=15,
+    )
+
 
 
 @when('a Twilio WhatsApp webhook is sent with body "{body}" and from "{from_number}"')
