@@ -1,76 +1,246 @@
-# 🚀 Ubuntu Voice — Group 5 QA Backend Test Automation Suite & QA Documentation
+# Ubuntu Voice — Group 5 QA Automation
 
-![BDD Tests](https://img.shields.io/badge/BDD-14%20Scenarios-blue)
-![Latest Run](https://img.shields.io/badge/Latest%20Run-14%20Passed-brightgreen)
-![Framework](https://img.shields.io/badge/Framework-Python%20%7C%20Behave%20%7C%20Requests-blue)
-![Target](https://img.shields.io/badge/Target-Live%20Cloud%20API-orange)
+Independent QA automation repository for **Group 5** testing of the Ubuntu Voice Hackathon project.
 
-> **Document ID:** QA-EXEC-001  
-> **Project:** Ubuntu Voice Hackathon Challenge  
-> **Team:** Group 5  
-> **QA Team:** Milka Otieno (QA Coordinator / Tester) & Gilton Koech / Chipukizii (QA Tester)  
-> **Automation Type:** BDD API Automation  
-> **Current Automated Scenarios:** 14 Passed / 0 Failed  
-> **Manual Test Inventory:** 90+ Test Cases  
+The repository contains BDD-based API automation, controlled test data, automated scenarios, test reports, CI configuration, and supporting QA documentation.
+
+Automated scenarios are mapped to the Group 5 manual QA test inventory to provide traceability from requirements through test execution and defects.
 
 ---
 
-# 1. Executive Summary
+## 📌 Master QA Sheet & Bug Submission Link
 
-This repository contains Group 5's independent QA automation suite and testing deliverables for the **Ubuntu Voice** platform.
-
-Ubuntu Voice is an AI/RAG-powered platform designed to help conflict-affected communities access peace and humanitarian information and report emergencies.
-
-The automation suite uses:
-- **Python 3**
-- **Behave (BDD)**
-- **Requests**
-- Live cloud API endpoints (`https://ubuntu-voice-b.vercel.app`)
-
-The automation suite contains **14 BDD scenarios**, all of which passed in the latest execution.
-
----
-
-# 2. Master QA Sheet & Bug Submission Link
-
-> 📌 **Master Google Sheet Submission:** [Ubuntu Voice Bug submission_5](https://docs.google.com/spreadsheets/d/1e06LEW098N1fcQmhRT111q-qib3rox_1H20xbWmlq_edit)
+> 📊 **Master Google Sheet Submission:** [Ubuntu Voice Bug submission_5](https://docs.google.com/spreadsheets/d/1jC0bL2WU90RI1IfeQmnR1OlT7qlD3RJx_WE0xtJwfwk/edit?usp=sharing)
 
 This master sheet contains:
-1. **Bug Reports Tab (`Buglist`):** Complete, reproducible bug entries (UV-1 through UV-4) following all Andela Bug Hunt Submission Standards.
-2. **Functional Test Cases Tab (`All Test Cases`):** The 90+ comprehensive manual & automated test case inventory covering Functional, Security, RAG, API, Usability, and WhatsApp integrations.
+1. **Bug Reports (`Buglist` tab):** Complete, reproducible bug entries (UV-1 through UV-4) following all Andela Bug Hunt Submission Standards.
+2. **Functional Test Cases (`All Test Cases` tab):** The 90+ comprehensive manual & automated test case inventory covering Functional, Security, RAG, API, Usability, and WhatsApp integrations.
 
 ---
 
-# 3. How to Install and Run the Automated BDD Tests
+## 1. Project Under Test
 
-### Prerequisites
-- Python 3.10+
-- Internet connection (tests run against the live cloud backend)
+### Ubuntu Voice
 
-### Step-by-Step Installation & Execution
+Ubuntu Voice is an AI/RAG-powered platform designed to help conflict-affected communities navigate emergencies and access peace and humanitarian assistance information.
+
+The platform supports users in:
+
+- Reporting emergencies
+- Receiving emergency and peace-related information
+- Interacting with specialized AI agents
+- Retrieving information from trusted agent-specific knowledge sources
+- Evaluating AI agent responses
+- Generating emergency alerts
+- Recording emergency statistics
+- Visualizing incidents on a map
+- Interacting with agents through WhatsApp
+
+### System Under Test
+
+**Live Application**
+https://ubuntuvoice.agentrixx.com/
+
+**Live Backend Cloud API**
+https://ubuntu-voice-b.vercel.app
+
+**Original Project Repository**
+https://github.com/mainanorbert/ubuntu_voice
+
+**Ubuntu Voice User Guide**
+https://github.com/mainanorbert/ubuntu_voice/blob/main/Hackathon_QA_project_user_guide.md
+
+**Project Demo**
+https://www.youtube.com/watch?v=_O3LJtk8dBo
+
+---
+
+## 2. Group 5 QA Team
+
+| Member | Role |
+|---|---|
+| Milka Otieno | QA Coordinator / Tester / Automation |
+| Gilton Koech (Chipukizii) | QA Tester / Automation Contributor |
+
+Group 5 operates independently from the other hackathon testing groups.
+
+---
+
+## 3. QA Objectives
+
+The objectives of Group 5 testing are to:
+
+1. Validate critical Ubuntu Voice user workflows.
+2. Verify AI/RAG responses are grounded in the correct knowledge base.
+3. Verify isolation between agents and their documents.
+4. Validate emergency reporting and classification.
+5. Verify emergency alerts and notifications.
+6. Verify statistics and map updates.
+7. Validate agent creation, document management and approval.
+8. Verify WhatsApp agent interaction.
+9. Validate AI agent evaluation functionality.
+10. Identify functional, security, privacy, usability, accessibility and compatibility defects.
+11. Automate high-value API/service scenarios using BDD.
+12. Maintain traceability between manual test cases and automated scenarios.
+
+---
+
+## 4. QA Scope
+
+Testing covers the following areas:
+
+### 4.1 Functional / UI
+- Application availability
+- Authentication
+- Primary chat workflow
+- Agent selection
+- Agent switching
+- Agent creation
+- Agent approval
+- Document management
+- Error handling
+- Dashboard functionality
+
+### 4.2 AI / Voice
+- Voice/chat interaction
+- Relevant responses
+- Unsupported questions
+- Ambiguous requests
+- Multilingual input
+- Unexpected language handling
+- AI response consistency
+- High-risk information handling
+
+### 4.3 RAG / Knowledge Retrieval
+- Knowledge grounding
+- Retrieval from trusted documents
+- Unsupported questions
+- Cross-agent knowledge isolation
+- Cross-agent document isolation
+- Source/citation consistency
+- Response relevance
+- Response consistency
+
+### 4.4 Emergency Reporting
+- Casualties
+- Severe hunger
+- Displacement
+- Rights violations
+- Non-incident messages
+- Repeated reports
+- Report quantities
+- Emergency classification
+
+### 4.5 Alerts / Notifications
+- Emergency alert generation
+- Alert content
+- Alert consistency with submitted reports
+
+### 4.6 Statistics
+- Incident creation
+- Incident classification
+- Category accuracy
+- Quantity/count accuracy
+- Agent association
+- Repeated incident handling
+
+### 4.7 Map
+- Known location recognition
+- Map markers
+- Unknown location handling
+- Location consistency
+- GPS-related behavior
+
+### 4.8 Agent Lifecycle
+- Agent creation
+- Required fields
+- Agent purpose validation
+- Document upload
+- Document processing
+- Agent approval
+- Public agent availability
+- Restrictions on unapproved agents
+
+### 4.9 WhatsApp
+- Greeting
+- Agent menu
+- Agent selection
+- Agent switching
+- Agent response
+- Agent isolation
+
+### 4.10 Evaluation
+- Evaluation dataset creation
+- Correctness scoring
+- Groundedness scoring
+- Relevance scoring
+- Agent association
+- Evaluation consistency
+
+### 4.11 Security / Privacy
+- Authentication
+- Authorization
+- Session handling
+- Protected functionality
+- Cross-agent data isolation
+- Document isolation
+- Unauthorized access
+- Credential/secret exposure
+
+### 4.12 Usability / Accessibility
+- Workflow clarity
+- Error-message clarity
+- Keyboard navigation
+- Readability
+- Mobile usability
+- Accessibility barriers
+
+### 4.13 Compatibility
+- Chrome
+- Firefox
+- Mobile browsers
+- Responsive layouts
+
+### 4.14 Regression
+- Authentication
+- Agent management
+- RAG
+- Emergency reporting
+- Statistics
+- Map
+- Evaluation
+- WhatsApp
+
+---
+
+## 5. Automation Approach & Execution Guide
+
+Group 5 uses **Behavior-Driven Development (BDD)** for API/service automation via **Python**, **Behave**, and **Requests**.
+
+The automation suite executes **14 automated end-to-end scenarios** targeting the live cloud API.
+
+### 5.1 How to Install and Run Automated Tests
 
 ```powershell
 # 1. Clone the repository
 git clone https://github.com/otienomilcah/ubuntu-voice-group5-QA.git
 cd ubuntu-voice-group5-QA
 
-# 2. Create and activate a virtual environment
+# 2. Set up virtual environment
 python -m venv venv
 .\venv\Scripts\activate      # On Windows
 # source venv/bin/activate   # On Linux/macOS
 
-# 3. Install required dependencies
+# 3. Install dependencies
 pip install behave requests
 
-# 4. Run the full BDD test suite
+# 4. Run the BDD automation suite
 behave --no-capture
 ```
 
----
+### 5.2 Evidence of Passing Execution Log
 
-# 4. Evidence of Passing Test Execution
-
-Below is the verified terminal output from the latest test run against the live cloud backend:
+Below is the verified terminal log from the latest test run:
 
 ```text
 Feature: Test Live Cloud AI Agent # features/agent_chat.feature:1
@@ -104,9 +274,9 @@ Took 1min 11.133s
 
 ---
 
-# 5. Discovered Bugs (Submission Standard Checklist)
+## 6. Discovered Bugs (Submission Standard Checklist)
 
-All defects discovered during testing strictly follow the **Andela Bug Hunt Submission Checklist**:
+All defects discovered during testing follow the **Andela Bug Hunt Submission Checklist**:
 
 ### 🐛 Bug UV-1: Dashboard Greeting Time Mismatch
 - **Title:** Dashboard always displays "Good afternoon" regardless of current time
@@ -119,7 +289,7 @@ All defects discovered during testing strictly follow the **Andela Bug Hunt Subm
   4. Access the dashboard at a different time of day and compare the greeting.
   5. Record whether the greeting changes according to the current time.
 - **Expected vs Actual:**
-  - *Expected:* The dashboard greeting should correspond to the current time of day (morning/afternoon/evening).
+  - *Expected:* The dashboard greeting should correspond to the current time of day.
   - *Actual:* The dashboard displays "Good afternoon" regardless of the current time.
 - **Frequency:** Every time observed across different times of day.
 - **Severity:** Low (Cosmetic/usability).
@@ -183,16 +353,6 @@ All defects discovered during testing strictly follow the **Andela Bug Hunt Subm
 - **Evidence:** API response headers showing `Content-Type: text/html` vs `application/json`.
 - **AI Assistance Used:** N/A
 - **Privacy Confirmation:** Confirmed clean; synthetic requests only.
-
----
-
-# 6. System Under Test Reference
-
-### Application Frontend
-- URL: `https://ubuntuvoice.agentrixx.com/`
-
-### Backend Cloud API
-- URL: `https://ubuntu-voice-b.vercel.app`
 
 ---
 *Maintained by Group 5 (Milka Otieno & Gilton Koech) for the Ubuntu Voice QA Hackathon Challenge.*
